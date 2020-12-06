@@ -3,14 +3,14 @@
   const map = L.map('map', {
     zoomSnap: .1,
     center: [38.821396926447974, -100.0458662281896],
-    zoom: 7,
-    minZoom: 6,
-    maxZoom: 10,
-    scrollWheelZoom: true,
-    zoomSnap: .1,
-    dragging: true,
-    zoomControl: true
-    // maxBounds: L.latLngBounds([-6.22, 27.72], [5.76, 47.83])
+    zoom: 5,
+    //minZoom: 6,
+    //maxZoom: 10,
+    //scrollWheelZoom: true,
+    //zoomSnap: .1,
+    //dragging: true,
+    //zoomControl: true
+    //maxBounds: L.latLngBounds([-6.22, 27.72], [5.76, 47.83])
   });
 
   // mapbox API access Token
@@ -37,15 +37,15 @@
   }).addTo(map);
 
   // use omnivore to load the CSV data
-  omnivore.csv('data/BattleSites.csv')
+  omnivore.csv('data/battlesites.csv')
     .on('ready', function (e) {
       //console.log(e.target)
       drawMap(e.target.toGeoJSON());
-      drawLegend(e.target.toGeoJSON());
+      //drawLegend(e.target.toGeoJSON());
     })
     .on('error', function (e) {
       console.log(e.error[0].message);
-      //}).addTo(map); // add the point data to the map
+    //}).addTo(map); // add the point data to the map
     });
 
 
@@ -63,109 +63,179 @@
       }
     }
 
-    // create 2 separate layers from GeoJSON data
-    const girlsLayer = L.geoJson(data, options).addTo(map),
-      boysLayer = L.geoJson(data, options).addTo(map);
+    // create separate layers from GeoJSON data
+    const americanrevolutionLayer = L.geoJson(data, options).addTo(map),
+      civilwarLayer = L.geoJson(data, options).addTo(map),
+      frenchindianLayer = L.geoJson(data, options).addTo(map),
+      kinggeorgeLayer = L.geoJson(data, options).addTo(map),
+      kingwilliamLayer = L.geoJson(data, options).addTo(map),
+      queenanneLayer = L.geoJson(data, options).addTo(map),
+      jenkinsLayer = L.geoJson(data, options).addTo(map),
+      indianwarsLayer = L.geoJson(data, options).addTo(map),
+      rebellionsLayer = L.geoJson(data, options).addTo(map),
+      mexicanwarLayer = L.geoJson(data, options).addTo(map),
+      war1812Layer = L.geoJson(data, options).addTo(map),
+      worldwarLayer = L.geoJson(data, options).addTo(map),
+      year = L.geoJson(data, options).addTo(map);
 
-    girlsLayer.setStyle({
-      color: '#D96D02',
+
+    // war layer colors
+    americanrevolutionLayer.setStyle({
+      color: '#FF0000',
     });
-    boysLayer.setStyle({
-      color: '#6E77B0',
+    civilwarLayer.setStyle({
+      color: '#808080',
     });
+    frenchindianLayer.setStyle({
+      color: '#0000FF',
+    });
+    kinggeorgeLayer.setStyle({
+      color: '#0000FF',
+    });
+    kingwilliamLayer.setStyle({
+      color: '#0000FF',
+    });
+    queenanneLayer.setStyle({
+      color: '#0000FF',
+    });
+    jenkinsLayer.setStyle({
+      color: '#0000FF',
+    });
+    indianwarsLayer.setStyle({
+      color: '#cd5c5c',
+    });
+    rebellionsLayer.setStyle({
+      color: '#FFa500',
+    });
+    mexicanwarLayer.setStyle({
+      color: '#008000',
+    });
+    war1812Layer.setStyle({
+      color: '#000080',
+    });
+    worldwarLayer.setStyle({
+      color: '#800080',
+    });
+
+    const sourceLayers = {
+      
+		  "<b style='color:#FF0000'>American Revolution (1775-1783)</b>": americanrevolutionLayer,
+			"<b style='color:#808080'>Civil War (1861-1865)</b>": civilwarLayer,
+      "<b style='color:#0000FF'>French & Indian War (1754-1763)</b>": frenchindianLayer,
+      "<b style='color:#0000FF'>French & Indian War - King George's War (1744-1748)</b>": kinggeorgeLayer,
+      "<b style='color:#0000FF'>French & Indian War - King William's War (1688-1697)</b>": kingwilliamLayer,
+      "<b style='color:#0000FF'>French & Indian War - Queen Anne's War (1702-1713)</b>": queenanneLayer,
+      "<b style='color:#0000FF'>French & Indian War - War of Jenkins' Ear (1744-1748)</b>": jenkinsLayer,
+      "<b style='color:#cd5c5c'>Indian Wars (1609-1924)</b>": indianwarsLayer,
+      "<b style='color:#FFa500'>Insurrections & Rebellions</b>": rebellionsLayer,
+      "<b style='color:#008000'>Mexican War (1846-1848)</b>": mexicanwarLayer,
+      "<b style='color:#000080'>War of 1812 (1812-1815)</b>": war1812Layer,
+      "<b style='color:#800080'>World War II (1939-1945)</b>": worldwarLayer,
+
+		}
+     
+    L.control.layers(null, sourceLayers, {
+      collapsed: false,
+      color: '#FF0000'
+    }).addTo(map);
 
     // fit the bounds of the map to one of the layers
-    map.fitBounds(girlsLayer.getBounds());
+    map.fitBounds(worldwarLayer.getBounds());
 
     // adjust zoom level of map
     map.setZoom(map.getZoom() - .4);
+    
+    resizeCircles(americanrevolutionLayer, 
+      civilwarLayer, 
+      frenchindianLayer, 
+      kinggeorgeLayer,
+      kingwilliamLayer,
+      queenanneLayer,
+      jenkinsLayer,
+      indianwarsLayer,
+      rebellionsLayer,
+      mexicanwarLayer,
+      war1812Layer,
+      worldwarLayer,
+    );
 
-    resizeCircles(girlsLayer, boysLayer, 1);
-    drawLegend(data);
-    sequenceUI(girlsLayer, boysLayer);
+    // drawLegend(data);
+
+    sequenceUI(americanrevolutionLayer, 
+      civilwarLayer, 
+      frenchindianLayer, 
+      kinggeorgeLayer,
+      kingwilliamLayer,
+      queenanneLayer,
+      jenkinsLayer,
+      indianwarsLayer,
+      rebellionsLayer,
+      mexicanwarLayer,
+      war1812Layer,
+      worldwarLayer,
+      year,
+    );
     
   } // end drawMap(data)
 
   function calcRadius(val) {
 
     const radius = Math.sqrt(val / Math.PI);
-    return radius * .5; // adjust .5 as a scale factor
+    return radius * .25; // adjust .5 as a scale factor
 
   }
 
-  function resizeCircles(girlsLayer, boysLayer, currentGrade) {
+  function resizeCircles(sourceLayers) {
 
-    girlsLayer.eachLayer(function (layer) {
-      const radius = calcRadius(Number(layer.feature.properties['G' + currentGrade]));
+    sourceLayers.eachLayer(function (layer) {
+      const radius = calcRadius();
       layer.setRadius(radius);
     });
-    boysLayer.eachLayer(function (layer) {
-      const radius = calcRadius(Number(layer.feature.properties['B' + currentGrade]));
-      layer.setRadius(radius);
-    });
+    retrieveInfo(sourceLayers, currentYear);
+    updateYear(currentYear);
+  } // end resizeCircles()
 
-    retrieveInfo(boysLayer, currentGrade);
-    //updateGrade(currentGrade);
-  }
-
-  function retrieveInfo(boysLayer, currentGrade) {
+  function retrieveInfo(sourceLayers, currentYear) {
     // select the element and reference with variable
     // and hide it from view initially
     const info = $('#info').hide();
 
-    // since boysLayer is on top, use to detect mouseover events
-    boysLayer.on('mouseover', function (e) {
+    // use to detect mouseover events
+    sourceLayer.on('mouseover', function (e) {
 
       // remove the none class to display and show
       info.show();
 
       // access properties of target layer
-      const props = e.layer.feature.properties;
+      const props = e.war;
+      activeLayer = e.Layer;
 
       // populate HTML elements with relevant info
-      $('#info span').html(props.COUNTY);
-      $(".girls span:first-child").html(`(grade ${currentGrade})`);
-      $(".boys span:first-child").html(`(grade ${currentGrade})`);
-      $(".girls span:last-child").html(Number(props[`G${currentGrade}`]).toLocaleString());
-      $(".boys span:last-child").html(Number(props[`B${currentGrade}`]).toLocaleString());
+      //$('#info span').html(props.Site);
+      //$(".girls span:first-child").html(`(grade ${currentGrade})`);
+      //$(".boys span:first-child").html(`(grade ${currentGrade})`);
+      //$(".girls span:last-child").html(Number(props[`G${currentGrade}`]).toLocaleString());
+      //$(".boys span:last-child").html(Number(props[`B${currentGrade}`]).toLocaleString());
 
       // raise opacity level as visual affordance
       e.layer.setStyle({
         fillOpacity: .6
       });
 
-      // empty arrays for boys and girls values
-      const girlsValues = [],
-        boysValues = [];
+      // empty arrays values
+      //const girlsValues = [],
+      //  boysValues = [];
 
       // loop through the grade levels and push values into those arrays
-      for (let i = 1; i <= 8; i++) {
-        girlsValues.push(props['G' + i]);
-        boysValues.push(props['B' + i]);
-      }
-
-      $('.girlspark').sparkline(girlsValues, {
-        width: '200px',
-        height: '30px',
-        lineColor: '#D96D02',
-        fillColor: '#d98939 ',
-        spotRadius: 0,
-        lineWidth: 2
-      });
-
-      $('.boyspark').sparkline(boysValues, {
-        width: '200px',
-        height: '30px',
-        lineColor: '#6E77B0',
-        fillColor: '#878db0',
-        spotRadius: 0,
-        lineWidth: 2
-      });
+      //for (let i = 1; i <= 8; i++) {
+      //  girlsValues.push(props['G' + i]);
+      //  boysValues.push(props['B' + i]);
+      //}
 
     });
 
     // hide the info panel when mousing off layergroup and remove affordance opacity
-    boysLayer.on('mouseout', function (e) {
+    sourceLayer.on('mouseout', function (e) {
 
       // hide the info panel
       info.hide();
@@ -199,7 +269,7 @@
     });
   }
 
-  function sequenceUI(girlsLayer, boysLayer) {
+  function sequenceUI(year) {
 
     // sequenceUI function body
     
@@ -222,14 +292,14 @@
     // add it to the map
     sliderControl.addTo(map);
 
-    // create Leaflet control for the grade legend
-    const gradeControl = L.control({
+    // create Leaflet control for the year legend
+    const yearControl = L.control({
       position: 'bottomleft'
     });
 
-    gradeControl.onAdd = function (map) {
+    yearControl.onAdd = function (map) {
 
-      const controls = L.DomUtil.get("grade");
+      const controls = L.DomUtil.get("Year");
 
       L.DomEvent.disableScrollPropagation(controls);
       L.DomEvent.disableClickPropagation(controls);
@@ -237,25 +307,25 @@
       return controls;
     }
 
-    // add grade legend to map
-    gradeControl.addTo(map);
+    // add year legend to map
+    yearControl.addTo(map);
 
     // select the slider's input and listen for change
     $('#slider input[type=range]')
       .on('input', function () {
 
         // current value of slider is current grade level
-        var currentGrade = this.value;
-        $('#grade span').html(currentGrade);
-        $('#slider p span').html(currentGrade);
+        var currentYear = this.value;
+        $('#year span').html(currentYear);
+        $('#slider p span').html(currentYear);
         
         // resize the circles with updated grade level
-        resizeCircles(girlsLayer, boysLayer, currentGrade);
+        resizeCircles();
       
       });
   } // end sequenceUI()
 
-  function drawLegend(data) {
+  /*function drawLegend(data) {
     // create Leaflet control for the legend
     const legendControl = L.control({
       position: 'bottomright'
@@ -347,14 +417,12 @@
     $("<hr class='large'>").insertBefore(".legend-large-label")
     $("<hr class='small'>").insertBefore(".legend-small-label").css('top', largeDiameter - smallDiameter - 8);
 
-  }
-
-  //function updateGrade(currentGrade) {
+  }*/
+  function updateYear(currentYear) {
 
     //select the slider's input and listen for change
-    //$('#grade span').html(currentGrade);
-    //console.log("")
-  //} // end updateGrade()
+    $('#year span').html(currentYear);
 
+  } // end updateYear()
   
 })();

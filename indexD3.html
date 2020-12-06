@@ -97,15 +97,21 @@
       <aside id="about" class="col-12 col-md-5 col-lg-4 text-dark py-2">
         <section>
           <h2 class="h2 text-dark">About this map</h2>
-          <p>These locations show emission estimates (in metric tons) for large, fixed sources. Facilities include power
-            plant, petroleum, and natural gas systems, waste processing facilities,
-            chemical plants, metals processing facilities, mineral processing facilities, and various other smaller
-            emitters.</p>
-          <p>The category <b>Other</b> includes emissions from large universites, food processing plants, airports,
-            military bases, distilleries, and mines.</p>
-          <p>These emmissions are based upon <a class="badge badge-success"
-              href="https://www.epa.gov/air-emissions-inventories/emissions-inventory-system-eis-gateway">2017 EPA
-              Air Emissions Inventories.</a></p>
+          <p>This is a map of potentially all known Battle Sites, Battlefields, or conflicts in the United States 
+            and some just outside the U.S. border (i.e. across the border in Mexico or Canada).
+            It is an attempt to recreate and improve upon a 1967 Battle Sites Map compiled by the USGS.
+            This will be a "living" document and will be updated as information is gathered.  
+            The 1967 map did not contain all battle site or battlefields.  
+            Every effort will be made to include each battle site from each war period.
+            In order to see the battle sites in Alaska and the Hawaiian Islands, you will need to zoom out significantly.
+          </p>
+          <p>Each site was looked up via the internet.  Many have one or more sites that have information about the battle.  (i.e. Wiki, National Park Service, State Parks, etc.)<br>
+            Latitude and Longitude site locations were researched and confirmed or approximated via Google Maps with the information derived from websites that contain information about the battle sites.<br>
+            Since the data could not be obtained from the USGS, it was compiled in an excel spreadsheet, then saved as an .csv file for use.
+          </p>
+          <p>Initial battle site locations are based upon <a class="badge badge-success"
+              href="graphics/us_battle_sites_usgs_1967.jpg">1967 Battle Sites Map.</a>
+          </p>
         </section>
       </aside>
     </section>
@@ -145,14 +151,11 @@
             <h7 class="text-uppercase">Information</h7>
             <ul class="list-unstyled">
               <li>Map authored by Sean Stewart (and my UK professors at <a href="https://github.com/newmapsplus"><b>New
-                    Maps Plus).</b></a></li>
-              <li>Data source from <a
-                  href="https://www.census.gov/geo/maps-data/data/tiger-cart-boundary.html"><b>Cartographic Boundary
-                    Files</b></a>
-                and the
-                <a href="https://www.epa.gov/air-emissions-inventories/emissions-inventory-system-eis-gateway"><b>EPA
-                    Air
-                    Emissions Inventories.</b></a></li>
+                    Maps Plus</b></a>).</li>
+              <li>Data sources from <a
+                  href="graphics/us_battle_sites_usgs_1967.jpg"><b>1967 Battle Sites Map</b></a>
+                and the<br>
+                <a href="http://www.emersonkent.com/map_archive/us_battle_sites.htm"><b>EmersonKent.com History for the Relaxed Historian</b></a></li>
             </ul>
           </div>
           <!-- Grid column -->
@@ -212,17 +215,6 @@
   </div> <!-- end .container-fluid -->
 
   <!-- JS, Popper.js, and jQuery -->
-  <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.4/umd/popper.min.js"
-    integrity="sha512-7yA/d79yIhHPvcrSiB8S/7TyX0OxlccU8F/kuB8mHYjLlF1MInPbEohpoqfz0AILoq5hoD7lELZAYYHbyeEjag=="
-    crossorigin="anonymous"></script>
-
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
-  </script> -->
-
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
   </script>
@@ -360,7 +352,7 @@
       // const color = d3.scaleOrdinal(d3.schemeSet1);
       const color = d3.scaleOrdinal(d3.schemeCategory10);
 
-      const battleSites = svg.append('g') // append new g element
+      /* const battleSites = svg.append('g') // append new g element
         .selectAll('circle') // select all the circles
         //.data(battleSitesData) // use the battleSites CSV data
         .data(battleSitesData.sort(function (a, b) {
@@ -383,6 +375,28 @@
           return color(d.War);
         })
         .attr('class', 'battlesite'); // give each circle a class name
+      */
+
+      const battleSites = svg.append('g') // append new g element
+        .selectAll('circle') // select all the circles
+        .data(battleSitesCSV) // use the facility CSV data
+        .join('circle') // join that data to circle elements
+        .attr('cx', d => { // feed the long/lat to the projection generator
+          d.position = projection([d.Long, d.Lat]); // create a new data attribute
+          return d.position[0]; // position the x
+        })
+        .attr('cy', d => {
+          return d.position[1]; // position the y
+        })
+        //.attr('r', 2) // define the radius
+        .attr('r', d => {
+          console.log(d); // access to the data here!!!
+          return radius(+d.Total);
+        })
+        .style('fill', d => {
+          return color(d.War);
+        })
+        .attr('class', 'site'); // give each circle a class name
 
       // applies event listeners to our polygons for user interaction
       battleSites.on('mouseover', (event, d) => { // when mousing over an element
@@ -390,9 +404,9 @@
           d3.select(event.currentTarget).classed('hover', true)
             .raise(); // select it, add a class name, and bring to front
           tooltip.classed('invisible', false).html(
-            `Facility: <h6>${d.Site}</h6>
-            Industry: ${d.War}<br>
-            Emissions: ${Number(d.Total).toLocaleString()} metric tons`) // make tooltip visible and update info
+            `Site: <h6>${d.Site}</h6>
+            War: ${d.War}<br>
+            Date(s): ${d.Dates}`) // make tooltip visible and update info
         })
         .on('mouseout', (event, d) => { // when mousing out of an element
           d3.select(event.currentTarget).classed('hover', false) // remove the class from the polygon
@@ -401,7 +415,7 @@
 
       filterByAttribute(battleSitesData, battleSites);
 
-      drawLegend(svg, width, height, radius);
+      // drawLegend(svg, width, height, radius);
 
       makeZoom(svg, radius);
 
@@ -424,7 +438,7 @@
       uniqueTypes.sort();
 
       // add an all facilities to the beginning
-      uniqueTypes.unshift('Battle Sites');
+      uniqueTypes.unshift('All Battle Sites');
 
       // select all the options (that don't exist yet)
       d3.select('#ui .dropdown-menu').selectAll('a')
@@ -446,7 +460,7 @@
 
         // change the display property for each circle
         battleSites.style('display', d => {
-          if (val === 'All facilities') return 'inline';
+          if (val === 'All Battle Sites') return 'inline';
           if (d.War != val) return 'none';
         });
 
@@ -454,7 +468,7 @@
       }
     }
 
-    function drawLegend(svg, width, height, radius) {
+    /*function drawLegend(svg, width, height, radius) {
 
       const legend = svg.append('g')
         .attr('dy', '1.3em')
@@ -480,7 +494,7 @@
       legend.append('text')
         .attr('y', 16)
         .text('metric tons');
-    } // end function drawLegend(svg, width, height, radius)
+    } // end function drawLegend(svg, width, height, radius)*/
   </script>
 </body>
 
