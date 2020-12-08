@@ -379,10 +379,10 @@
 
       const battleSites = svg.append('g') // append new g element
         .selectAll('circle') // select all the circles
-        .data(battleSitesCSV) // use the facility CSV data
+        .data(battleSitesData) // use the facility CSV data
         .join('circle') // join that data to circle elements
         .attr('cx', d => { // feed the long/lat to the projection generator
-          d.position = projection([d.Long, d.Lat]); // create a new data attribute
+          d.position = projection([d.Longitude, d.Latitude]); // create a new data attribute
           return d.position[0]; // position the x
         })
         .attr('cy', d => {
@@ -391,7 +391,7 @@
         //.attr('r', 2) // define the radius
         .attr('r', d => {
           console.log(d); // access to the data here!!!
-          return radius(+d.Total);
+          return radius(+d);
         })
         .style('fill', d => {
           return color(d.War);
