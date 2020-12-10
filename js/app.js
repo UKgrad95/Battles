@@ -45,7 +45,7 @@
     })
     .on('error', function (e) {
       console.log(e.error[0].message);
-    //}).addTo(map); // add the point data to the map
+      //}).addTo(map); // add the point data to the map
     });
 
 
@@ -118,9 +118,9 @@
     });
 
     const sourceLayers = {
-      
-		  "<b style='color:#FF0000'>American Revolution (1775-1783)</b>": americanrevolutionLayer,
-			"<b style='color:#808080'>Civil War (1861-1865)</b>": civilwarLayer,
+
+      "<b style='color:#FF0000'>American Revolution (1775-1783)</b>": americanrevolutionLayer,
+      "<b style='color:#808080'>Civil War (1861-1865)</b>": civilwarLayer,
       "<b style='color:#0000FF'>French & Indian War (1754-1763)</b>": frenchindianLayer,
       "<b style='color:#0000FF'>French & Indian War - King George's War (1744-1748)</b>": kinggeorgeLayer,
       "<b style='color:#0000FF'>French & Indian War - King William's War (1688-1697)</b>": kingwilliamLayer,
@@ -132,8 +132,8 @@
       "<b style='color:#000080'>War of 1812 (1812-1815)</b>": war1812Layer,
       "<b style='color:#800080'>World War II (1939-1945)</b>": worldwarLayer,
 
-		}
-     
+    }
+
     L.control.layers(null, sourceLayers, {
       collapsed: false,
       color: '#FF0000'
@@ -144,10 +144,10 @@
 
     // adjust zoom level of map
     map.setZoom(map.getZoom() - .4);
-    
-    resizeCircles(americanrevolutionLayer, 
-      civilwarLayer, 
-      frenchindianLayer, 
+
+    resizeCircles(americanrevolutionLayer,
+      civilwarLayer,
+      frenchindianLayer,
       kinggeorgeLayer,
       kingwilliamLayer,
       queenanneLayer,
@@ -161,9 +161,9 @@
 
     // drawLegend(data);
 
-    sequenceUI(americanrevolutionLayer, 
-      civilwarLayer, 
-      frenchindianLayer, 
+    sequenceUI(americanrevolutionLayer,
+      civilwarLayer,
+      frenchindianLayer,
       kinggeorgeLayer,
       kingwilliamLayer,
       queenanneLayer,
@@ -175,7 +175,7 @@
       worldwarLayer,
       year,
     );
-    
+
   } // end drawMap(data)
 
   function calcRadius(val) {
@@ -185,12 +185,68 @@
 
   }
 
-  function resizeCircles(sourceLayers) {
+  function resizeCircles(americanrevolutionLayer,
+    civilwarLayer,
+    frenchindianLayer,
+    kinggeorgeLayer,
+    kingwilliamLayer,
+    queenanneLayer,
+    jenkinsLayer,
+    indianwarsLayer,
+    rebellionsLayer,
+    mexicanwarLayer,
+    war1812Layer,
+    worldwarLayer) {
 
-    sourceLayers.eachLayer(function (layer) {
+    americanrevolutionLayer.eachLayer(function (layer) {
       const radius = calcRadius();
       layer.setRadius(radius);
     });
+    civilwarLayer.eachLayer(function (layer) {
+      const radius = calcRadius();
+      layer.setRadius(radius);
+    });
+    frenchindianLayer.eachLayer(function (layer) {
+      const radius = calcRadius();
+      layer.setRadius(radius);
+    });
+    kinggeorgeLayer.eachLayer(function (layer) {
+      const radius = calcRadius();
+      layer.setRadius(radius);
+    });
+    kingwilliamLayer.eachLayer(function (layer) {
+      const radius = calcRadius();
+      layer.setRadius(radius);
+    });
+    queenanneLayer.eachLayer(function (layer) {
+      const radius = calcRadius();
+      layer.setRadius(radius);
+    });
+    jenkinsLayer.eachLayer(function (layer) {
+      const radius = calcRadius();
+      layer.setRadius(radius);
+    });
+    indianwarsLayer.eachLayer(function (layer) {
+      const radius = calcRadius();
+      layer.setRadius(radius);
+    });
+    rebellionsLayer.eachLayer(function (layer) {
+      const radius = calcRadius();
+      layer.setRadius(radius);
+    });
+    mexicanwarLayer.eachLayer(function (layer) {
+      const radius = calcRadius();
+      layer.setRadius(radius);
+    });
+    war1812Layer.eachLayer(function (layer) {
+      const radius = calcRadius();
+      layer.setRadius(radius);
+    });
+    worldwarLayer.eachLayer(function (layer) {
+      const radius = calcRadius();
+      layer.setRadius(radius);
+    });
+
     retrieveInfo(sourceLayers, currentYear);
     updateYear(currentYear);
   } // end resizeCircles()
@@ -272,7 +328,7 @@
   function sequenceUI(year) {
 
     // sequenceUI function body
-    
+
     // create Leaflet control for the slider
     const sliderControl = L.control({
       position: 'bottomleft'
@@ -318,10 +374,10 @@
         var currentYear = this.value;
         $('#year span').html(currentYear);
         $('#slider p span').html(currentYear);
-        
+
         // resize the circles with updated grade level
         resizeCircles();
-      
+
       });
   } // end sequenceUI()
 
@@ -424,5 +480,5 @@
     $('#year span').html(currentYear);
 
   } // end updateYear()
-  
+
 })();
