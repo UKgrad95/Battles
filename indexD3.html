@@ -56,19 +56,19 @@
     }
 
     .state {
-      fill: #61aab6;
+      fill: #030303;
       stroke: whitesmoke;
       stroke-width: .7;
     }
 
-    .battlesite {
-      fill: #cf5635;
+    .battlesites {
+      fill: #b40808;
       stroke: white;
       stroke-width: .3;
       opacity: 1;
     }
 
-    .battlesite:hover {
+    .battlesites:hover {
       stroke-width: 2;
     }
   </style>
@@ -97,17 +97,21 @@
       <aside id="about" class="col-12 col-md-5 col-lg-4 text-dark py-2">
         <section>
           <h2 class="h2 text-dark">About this map</h2>
-          <p>This is a map of potentially all known Battle Sites, Battlefields, or conflicts in the United States 
+          <p>This is a map of potentially all known Battle Sites, Battlefields, or conflicts in the United States
             and some just outside the U.S. border (i.e. across the border in Mexico or Canada).
             It is an attempt to recreate and improve upon a 1967 Battle Sites Map compiled by the USGS.
-            This will be a "living" document and will be updated as information is gathered.  
-            The 1967 map did not contain all battle site or battlefields.  
+            This will be a "living" document and will be updated as information is gathered.
+            The 1967 map did not contain all battle site or battlefields.
             Every effort will be made to include each battle site from each war period.
-            In order to see the battle sites in Alaska and the Hawaiian Islands, you will need to zoom out significantly.
+            In order to see the battle sites in Alaska and the Hawaiian Islands, you will need to zoom out
+            significantly.
           </p>
-          <p>Each site was looked up via the internet.  Many have one or more sites that have information about the battle.  (i.e. Wiki, National Park Service, State Parks, etc.)<br>
-            Latitude and Longitude site locations were researched and confirmed or approximated via Google Maps with the information derived from websites that contain information about the battle sites.<br>
-            Since the data could not be obtained from the USGS, it was compiled in an excel spreadsheet, then saved as an .csv file for use.
+          <p>Each site was looked up via the internet. Many have one or more sites that have information about the
+            battle. (i.e. Wiki, National Park Service, State Parks, etc.)<br>
+            Latitude and Longitude site locations were researched and confirmed or approximated via Google Maps with the
+            information derived from websites that contain information about the battle sites.<br>
+            Since the data could not be obtained from the USGS, it was compiled in an excel spreadsheet, then saved as
+            an .csv file for use.
           </p>
           <p>Initial battle site locations are based upon <a class="badge badge-success"
               href="graphics/us_battle_sites_usgs_1967.jpg">1967 Battle Sites Map.</a>
@@ -152,10 +156,10 @@
             <ul class="list-unstyled">
               <li>Map authored by Sean Stewart (and my UK professors at <a href="https://github.com/newmapsplus"><b>New
                     Maps Plus</b></a>).</li>
-              <li>Data sources from <a
-                  href="graphics/us_battle_sites_usgs_1967.jpg"><b>1967 Battle Sites Map</b></a>
+              <li>Data sources from <a href="graphics/us_battle_sites_usgs_1967.jpg"><b>1967 Battle Sites Map</b></a>
                 and the<br>
-                <a href="http://www.emersonkent.com/map_archive/us_battle_sites.htm"><b>EmersonKent.com History for the Relaxed Historian</b></a></li>
+                <a href="http://www.emersonkent.com/map_archive/us_battle_sites.htm"><b>EmersonKent.com History for the
+                    Relaxed Historian</b></a></li>
             </ul>
           </div>
           <!-- Grid column -->
@@ -228,7 +232,12 @@
   </script>
 
   <script src="https://d3js.org/d3.v6.js"></script>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
   <script src="https://unpkg.com/topojson@3"></script>
+
+  <script src="https://d3js.org/d3-color.v2.min.js"></script>
+  <script src="https://d3js.org/d3-interpolate.v2.min.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v2.min.js"></script>
 
   <script>
     // JavaScript
@@ -275,7 +284,8 @@
             .selectAll('circle')
             .attr('transform', event.transform)
             .attr('r', d => {
-              return radius(+d.Total) * (1 / event.transform.k);
+              //  return radius(+d.Total) * (1 / event.transform.k);
+              return 3 / event.transform.k
             })
         });
 
@@ -317,7 +327,8 @@
 
       // declare a geographic path generator
       // fit the extent to the width and height using the geojson
-      const projection = d3.geoAlbersUsa()
+      // const projection = d3.geoAlbersUsa()
+      const projection = d3.geoAlbers()
         .fitSize([width, height], geojson);
 
       // declare a path generator using the projection
@@ -326,7 +337,7 @@
 
       // Create div for the tooltip and hide with opacity
       const tooltip = d3.select('.container-fluid').append('div')
-        .attr('class', 'my-tooltip bg-warning text-white py-1 px-2 rounded position-absolute invisible');
+        .attr('class', 'my-tooltip bg-dark text-white py-1 px-2 rounded position-absolute invisible');
 
       // when mouse moves over the mapContainer
       mapContainer
@@ -351,38 +362,18 @@
       // define color generator
       // const color = d3.scaleOrdinal(d3.schemeSet1);
       const color = d3.scaleOrdinal(d3.schemeCategory10);
-
-      /* const battleSites = svg.append('g') // append new g element
-        .selectAll('circle') // select all the circles
-        //.data(battleSitesData) // use the battleSites CSV data
-        .data(battleSitesData.sort(function (a, b) {
-          return b.Total - a.Total; // place the large ones on the bottom
-        }))
-        .join('circle') // join that data to circle elements
-        .attr('cx', d => { // feed the long/lat to the projection generator
-          d.position = projection([d.Longitude, d.Latitude]); // create a new data attribute
-          return d.position[0]; // position the x
-        })
-        .attr('cy', d => {
-          return d.position[1]; // position the y
-        })
-        //.attr('r', 2) // define the radius
-        .attr('r', d => {
-          // console.log(d); // access to the data here!!!
-          return radius(+d.Total);
-        })
-        .style('fill', d => {
-          return color(d.War);
-        })
-        .attr('class', 'battlesite'); // give each circle a class name
-      */
+      // const color = d3.scaleOrdinal(d3.schemePaired);
+      
 
       const battleSites = svg.append('g') // append new g element
         .selectAll('circle') // select all the circles
         .data(battleSitesData) // use the facility CSV data
         .join('circle') // join that data to circle elements
         .attr('cx', d => { // feed the long/lat to the projection generator
-          d.position = projection([d.Longitude, d.Latitude]); // create a new data attribute
+          //d.position = projection([d.Longitude, d.Latitude]); // create a new data attribute
+          //return d.position[0]; // position the x
+          d.position = projection([+d.Long, +d.Lat]); // create a new data attribute
+          console.log(d)
           return d.position[0]; // position the x
         })
         .attr('cy', d => {
@@ -391,7 +382,8 @@
         //.attr('r', 2) // define the radius
         .attr('r', d => {
           console.log(d); // access to the data here!!!
-          return radius(+d);
+          // return radius(+d);
+          return 3;
         })
         .style('fill', d => {
           return color(d.War);
