@@ -53,15 +53,15 @@
     // access to data here
     console.log(data);
 
-    const options = {
-      pointToLayer: function (feature, ll) {
-        return L.circleMarker(ll, {
-          opacity: 1,
-          weight: 2,
-          fillOpacity: 0.5,
-        })
-      }
-    }
+    // const options = {
+    //   pointToLayer: function (feature, ll) {
+    //     return L.circleMarker(ll, {
+    //       opacity: 1,
+    //       weight: 2,
+    //       fillOpacity: 0.5,
+    //     })
+    //   }
+    // }
 
     // create separate layers from GeoJSON data
     // const americanrevolutionLayer = L.geoJson(data, options).addTo(map),
@@ -185,8 +185,8 @@
     //   "<b style='color:#800080'>World War II (1939-1945)</b>": worldwarLayer,
 
     // }
-    console.log(legendWars)
-    L.control.layers(null, legendWars, {
+
+    const legendBuilt = L.control.layers(null, legendWars, {
       collapsed: false,
       color: '#FF0000'
     }).addTo(map);
@@ -195,7 +195,7 @@
     map.fitBounds(wars.civilwarLayer.getBounds());
 
     // adjust zoom level of map
-    map.setZoom(map.getZoom() - .4);
+    // map.setZoom(map.getZoom() - .4);
 
     // resizeCircles(americanrevolutionLayer,
     //   civilwarLayer,
@@ -237,75 +237,75 @@
 
   // }
 
-  function resizeCircles(americanrevolutionLayer,
-    civilwarLayer,
-    frenchindianLayer,
-    kinggeorgeLayer,
-    kingwilliamLayer,
-    queenanneLayer,
-    jenkinsLayer,
-    indianwarsLayer,
-    rebellionsLayer,
-    mexicanwarLayer,
-    war1812Layer,
-    worldwarLayer) {
+  // function resizeCircles(americanrevolutionLayer,
+  //   civilwarLayer,
+  //   frenchindianLayer,
+  //   kinggeorgeLayer,
+  //   kingwilliamLayer,
+  //   queenanneLayer,
+  //   jenkinsLayer,
+  //   indianwarsLayer,
+  //   rebellionsLayer,
+  //   mexicanwarLayer,
+  //   war1812Layer,
+  //   worldwarLayer) {
 
-    americanrevolutionLayer.eachLayer(function (layer) {
-      const radius = calcRadius();
-      layer.setRadius(radius);
-    });
-    civilwarLayer.eachLayer(function (layer) {
-      const radius = calcRadius();
-      layer.setRadius(radius);
-    });
-    frenchindianLayer.eachLayer(function (layer) {
-      const radius = calcRadius();
-      layer.setRadius(radius);
-    });
-    kinggeorgeLayer.eachLayer(function (layer) {
-      const radius = calcRadius();
-      layer.setRadius(radius);
-    });
-    kingwilliamLayer.eachLayer(function (layer) {
-      const radius = calcRadius();
-      layer.setRadius(radius);
-    });
-    queenanneLayer.eachLayer(function (layer) {
-      const radius = calcRadius();
-      layer.setRadius(radius);
-    });
-    jenkinsLayer.eachLayer(function (layer) {
-      const radius = calcRadius();
-      layer.setRadius(radius);
-    });
-    indianwarsLayer.eachLayer(function (layer) {
-      const radius = calcRadius();
-      layer.setRadius(radius);
-    });
-    rebellionsLayer.eachLayer(function (layer) {
-      const radius = calcRadius();
-      layer.setRadius(radius);
-    });
-    mexicanwarLayer.eachLayer(function (layer) {
-      const radius = calcRadius();
-      layer.setRadius(radius);
-    });
-    war1812Layer.eachLayer(function (layer) {
-      const radius = calcRadius();
-      layer.setRadius(radius);
-    });
-    worldwarLayer.eachLayer(function (layer) {
-      const radius = calcRadius();
-      layer.setRadius(radius);
-    });
+  //   americanrevolutionLayer.eachLayer(function (layer) {
+  //     const radius = calcRadius();
+  //     layer.setRadius(radius);
+  //   });
+  //   civilwarLayer.eachLayer(function (layer) {
+  //     const radius = calcRadius();
+  //     layer.setRadius(radius);
+  //   });
+  //   frenchindianLayer.eachLayer(function (layer) {
+  //     const radius = calcRadius();
+  //     layer.setRadius(radius);
+  //   });
+  //   kinggeorgeLayer.eachLayer(function (layer) {
+  //     const radius = calcRadius();
+  //     layer.setRadius(radius);
+  //   });
+  //   kingwilliamLayer.eachLayer(function (layer) {
+  //     const radius = calcRadius();
+  //     layer.setRadius(radius);
+  //   });
+  //   queenanneLayer.eachLayer(function (layer) {
+  //     const radius = calcRadius();
+  //     layer.setRadius(radius);
+  //   });
+  //   jenkinsLayer.eachLayer(function (layer) {
+  //     const radius = calcRadius();
+  //     layer.setRadius(radius);
+  //   });
+  //   indianwarsLayer.eachLayer(function (layer) {
+  //     const radius = calcRadius();
+  //     layer.setRadius(radius);
+  //   });
+  //   rebellionsLayer.eachLayer(function (layer) {
+  //     const radius = calcRadius();
+  //     layer.setRadius(radius);
+  //   });
+  //   mexicanwarLayer.eachLayer(function (layer) {
+  //     const radius = calcRadius();
+  //     layer.setRadius(radius);
+  //   });
+  //   war1812Layer.eachLayer(function (layer) {
+  //     const radius = calcRadius();
+  //     layer.setRadius(radius);
+  //   });
+  //   worldwarLayer.eachLayer(function (layer) {
+  //     const radius = calcRadius();
+  //     layer.setRadius(radius);
+  //   });
 
     // retrieveInfo(sourceLayers, currentYear);
     // updateYear(currentYear);
-  } // end resizeCircles()
+  // } // end resizeCircles()
 
-  function calcRadius() {
-    return 5
-  }
+  // function calcRadius() {
+  //   return 5
+  // }
 
   function retrieveInfo(sourceLayers, currentYear) {
     // select the element and reference with variable
