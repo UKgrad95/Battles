@@ -275,7 +275,8 @@
             .selectAll('circle')
             .attr('transform', event.transform)
             .attr('r', d => {
-              return radius(+d.Total) * (1 / event.transform.k);
+              // return radius(+d.Total) * (1 / event.transform.k);
+              return 3 / event.transform.k
             })
         });
 
@@ -317,7 +318,7 @@
 
       // declare a geographic path generator
       // fit the extent to the width and height using the geojson
-      const projection = d3.geoAlbersUsa()
+      const projection = d3.geoAlbers()
         .fitSize([width, height], geojson);
 
       // declare a path generator using the projection
@@ -382,8 +383,12 @@
         .data(battleSitesData) // use the facility CSV data
         .join('circle') // join that data to circle elements
         .attr('cx', d => { // feed the long/lat to the projection generator
-          d.position = projection([d.Longitude, d.Latitude]); // create a new data attribute
-          return d.position[0]; // position the x
+          // console.log(d)
+          
+            d.position = projection([+d.Long, +d.Lat]); // create a new data attribute
+            console.log(d)
+            return d.position[0]; // position the x
+
         })
         .attr('cy', d => {
           return d.position[1]; // position the y
@@ -391,7 +396,8 @@
         //.attr('r', 2) // define the radius
         .attr('r', d => {
           console.log(d); // access to the data here!!!
-          return radius(+d);
+          // return radius(d.radius);
+          return 3
         })
         .style('fill', d => {
           return color(d.War);
