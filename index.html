@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Battles D3 Version</title>
+
+  <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/litera/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    #map {
+      width: 100%;
+      height: calc(40vh);
+    }
+
+    #about {
+      max-height: calc(80vh);
+      overflow-y: scroll;
+    }
+
+    .legend circle {
+      fill: none;
+      stroke: #ccc;
+    }
+
+    .legend text {
+      fill: #777;
+      font: 10px sans-serif;
+      text-anchor: middle;
+    }
+
+    #ui {
+      position: absolute;
+      right: 1em;
+      top: 1em;
+    }
+
+    /* Small devices (landscape phones, 576px and up) */
+    @media (min-width: 576px) {}
+
+    /* Medium devices (tablets, 768px and up) */
+    @media (min-width: 768px) {
+      #map {
+        height: calc(60vh);
+      }
+    }
+
+    /* Large devices (desktops, 992px and up) */
+    @media (min-width: 992px) {
+
+      #map {
+        height: calc(80vh);
+      }
+    }
+
+    .state {
+      fill: #030303;
+      stroke: whitesmoke;
+      stroke-width: .7;
+    }
+
+    .battlesites {
+      fill: #b40808;
+      stroke: white;
+      stroke-width: .3;
+      opacity: 1;
+    }
+
+    .battlesites:hover {
+      stroke-width: 2;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <header class="row py-3 bg-dark text-white">
+      <div class="col mx-2">
+        <h1 class="h1">Battle Sites of the United States</h1>
+      </div>
+    </header>
+
+    <section class="row bg-secondary ">
+      <div class="col-12 col-md-7 col-lg-8 px-0">
+        <div id="map" class="bg-secondary position-relative">
+          <div id="ui" class="dropdown">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              All Battle Sites
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink"></div>
+          </div>
+        </div>
+      </div>
+      <aside id="about" class="col-12 col-md-5 col-lg-4 text-dark py-2">
+        <section>
+          <h2 class="h2 text-dark">About this map</h2>
+          <p>Initial battle site locations are based upon <a class="badge badge-success"
+              href="graphics/us_battle_sites_usgs_1967.jpg">1967 Battle Sites Map.</a>
+          </p>
+          <p>This is a map of potentially all known Battle Sites, Battlefields, or conflicts in the United States
+            and some just outside the U.S. border (i.e. across the border in Mexico or Canada).
+            It is an attempt to recreate and improve upon a 1967 Battle Sites Map compiled by the USGS.
+            This will be a "living" document and will be updated as information is gathered.
+          </p>
+          <p>The 1967 map did not contain all battle sites or battlefields. Every effort will be made to include each
+            battle site from each war period.
+            In order to see the battle sites in Alaska and the Hawaiian Islands, you will need to zoom out
+            and pan to the west. While most battle sites and battlefields are protected and a part of the National Park
+            Service or some State or Local entity.
+            There are many sites that are not protected and in fact considered endangered. Many sites cannot be located
+            with 100% certainty due to overdevelopment. This map could potentially aid historical societies and protection groups
+            in the preservation of some sites.
+          </p>
+          <p>Each site was looked up via the internet. Many have one or more sites that have information about the
+            battle. (i.e. Wiki, National Park Service, State Parks, etc.)
+            Latitude and Longitude site locations were researched and confirmed or approximated via Google Maps with the
+            information derived from websites that contain information about the battle sites.
+            Since the data could not be obtained from the USGS, it was compiled in an excel spreadsheet, then saved as
+            a .csv file for use.
+          </p>
+        </section>
+      </aside>
+    </section>
+    <!--<footer class="row bg-secondary text-black py-4">
+      <div class="col mx-2">
+        <ul class="list-unstyled">
+          <li>Map authored by Sean Stewart and my UK professors at <a href="https://github.com/newmapsplus"><b>New Maps Plus</b></li>
+            <a href="https://newmapsplus.github.io">
+              <img src="https://newmapsplus.github.io/assets/graphics/logo-2018-nmp-75px-h-gray.png"
+                alt="University of Kentucky Geography">
+            </a>
+            <a href="https://uky-gis.github.io">
+              <img src="https://newmapsplus.github.io/assets/graphics/logo-2018-geography-75px-h.png"
+                alt="University of Kentucky Geography">
+            </a>
+            <li>data sourced from
+            <a href="https://www.census.gov/geo/maps-data/data/tiger-cart-boundary.html"><b>Cartographic Boundary Files</b></a>
+            and the
+            <a href="https://www.epa.gov/air-emissions-inventories/emissions-inventory-system-eis-gateway"><b>EPA Air
+              Emissions Inventories</b></a></li>
+        </ul>
+      </div>
+    </footer>-->
+    <!-- Footer -->
+    <footer class="page-footer font-small blue pt-4">
+
+      <!-- Footer Links -->
+      <div class="container-fluid text-center text-md-left">
+
+        <!-- Grid row -->
+        <div class="row">
+
+          <!-- Grid column -->
+          <div class="col-md-6 mt-md-0 mt-3">
+
+            <!-- Content -->
+            <h7 class="text-uppercase">Information</h7>
+            <ul class="list-unstyled">
+              <li>Map authored by Sean Stewart (and my UK professors at <a href="https://github.com/newmapsplus"><b>New
+                    Maps Plus</b></a>).</li>
+              <li>Data sources from <a href="graphics/us_battle_sites_usgs_1967.jpg"><b>1967 Battle Sites Map</b></a>
+                and the<br>
+                <a href="http://www.emersonkent.com/map_archive/us_battle_sites.htm"><b>EmersonKent.com History for the
+                    Relaxed Historian</b></a></li>
+            </ul>
+          </div>
+          <!-- Grid column -->
+
+          <hr class="clearfix w-100 d-md-none pb-3">
+
+          <!-- Grid column -->
+          <div class="col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h7 class="text-uppercase">New Maps Plus</h7>
+
+            <ul class="list-unstyled">
+              <li>
+                <a href="https://newmapsplus.github.io">
+                  <img src="https://newmapsplus.github.io/assets/graphics/logo-2018-nmp-75px-h-gray.png"
+                    alt="University of Kentucky Geography">
+                </a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h7 class="text-uppercase">University of Kentucky Geography</h7>
+
+            <ul class="list-unstyled">
+              <li>
+                <a href="https://uky-gis.github.io">
+                  <img src="https://newmapsplus.github.io/assets/graphics/logo-2018-geography-75px-h.png"
+                    alt="University of Kentucky Geography">
+                </a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+      </div>
+      <!-- Footer Links -->
+
+      <!-- Copyright -->
+      <div class="footer-copyright text-center py-3">Ronin Geospatial © 2020 Copyright:
+        <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+      </div>
+      <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+  </div> <!-- end .container-fluid -->
+
+  <!-- JS, Popper.js, and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+    integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous">
+  </script>
+
+  <script src="https://d3js.org/d3.v6.js"></script>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script src="https://unpkg.com/topojson@3"></script>
+
+  <script src="https://d3js.org/d3-color.v2.min.js"></script>
+  <script src="https://d3js.org/d3-interpolate.v2.min.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v2.min.js"></script>
+
+  <script>
+    // JavaScript
+    // asynchronous calls to data files
+    const statesJson = d3.json('data/us-states.json');
+    const battleSitesCSV = d3.csv('data/BattleSites.csv');
+
+    // use promise to call all data files, then send data to callback
+    Promise.all([statesJson, battleSitesCSV])
+      .then(drawMap)
+      .catch(error => {
+        console.log(error)
+      });
+
+    // When the browser resizes...
+    window.addEventListener('resize', () => {
+
+      // remove existing SVG
+      d3.selectAll("svg").remove();
+
+      // use promise to call all data files, then send data to callback
+      Promise.all([statesJson, battleSitesCSV])
+        .then(drawMap)
+        .catch(error => {
+          console.log(error)
+        });
+    });
+
+    // Create zoom function
+    function makeZoom(svg, radius) {
+      const zoom = d3.zoom()
+        // on zoom (many events fire this event like mousemove, wheel, dblclick, etc.)...
+        .on('zoom', (event) => {
+          console.log(event)
+          svg
+            // select all paths in svg
+            .selectAll('path')
+            // transform path based on event 
+            .attr('transform', event.transform)
+            // change stroke width on zoom
+            .attr("stroke-width", 1 / event.transform.k);
+
+          svg
+            .selectAll('circle')
+            .attr('transform', event.transform)
+            .attr('r', d => {
+              //  return radius(+d.Total) * (1 / event.transform.k);
+              return 3 / event.transform.k
+            })
+        });
+
+      // Attach function to svg
+      svg.call(zoom)
+
+    } // end function makeZoom(svg, radius)
+
+    // function called when Promise above is complete
+    function drawMap(data) {
+
+      console.log(data); // our two datasets within an array
+
+      // data is array of our two datasets
+      const statesData = data[0];
+      const battleSitesData = data[1];
+
+      // select the HTML element that will hold our map
+      const mapContainer = d3.select('#map')
+
+      // determine width and height of map from container
+      const width = mapContainer.node().offsetWidth - 60;
+      const height = mapContainer.node().offsetHeight - 60;
+
+      // create and append a new SVG element to the map div
+      const svg = mapContainer
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .classed('position-absolute', true) // add bootstrap class
+        .style('top', '40px') // 40 pixels from the top
+        .style('left', '30px'); // 40 pixels from the left
+
+      // convert the TopoJSON into GeoJSON
+      const geojson = topojson.feature(statesData, {
+        type: 'GeometryCollection',
+        geometries: statesData.objects.cb_2016_us_state_20m.geometries
+      });
+
+      // declare a geographic path generator
+      // fit the extent to the width and height using the geojson
+      // const projection = d3.geoAlbersUsa()
+      const projection = d3.geoAlbers()
+        .fitSize([width, height], geojson);
+
+      // declare a path generator using the projection
+      const path = d3.geoPath()
+        .projection(projection);
+
+      // Create div for the tooltip and hide with opacity
+      const tooltip = d3.select('.container-fluid').append('div')
+        .attr('class', 'my-tooltip bg-dark text-white py-1 px-2 rounded position-absolute invisible');
+
+      // when mouse moves over the mapContainer
+      mapContainer
+        .on('mousemove', event => {
+          // update the position of the tooltip
+          tooltip.style('left', (event.pageX + 10) + 'px')
+            .style('top', (event.pageY - 30) + 'px');
+        });
+
+      // append a new g element
+      const states = svg.append('g')
+        .selectAll('path')
+        .data(geojson.features) // use the GeoJSON features
+        .join('path') // join them to path elements
+        .attr('d', path) // use our path generator to project them on the screen
+        .attr('class', 'state'); // give each path element a class name of each state
+
+      // define radius generator
+      const radius = d3.scaleSqrt().domain([0, 1e6]).range([1, 9]);
+      // console.log(radius(25)); // output is 1.04
+
+      // define color generator
+      // const color = d3.scaleOrdinal(d3.schemeSet1);
+      // const color = d3.scaleOrdinal(d3.schemeCategory10);
+      const color = d3.scaleOrdinal(d3.schemePaired);
+
+
+      const battleSites = svg.append('g') // append new g element
+        .selectAll('circle') // select all the circles
+        .data(battleSitesData) // use the facility CSV data
+        .join('circle') // join that data to circle elements
+        .attr('cx', d => { // feed the long/lat to the projection generator
+          //d.position = projection([d.Longitude, d.Latitude]); // create a new data attribute
+          //return d.position[0]; // position the x
+          d.position = projection([+d.Long, +d.Lat]); // create a new data attribute
+          console.log(d)
+          return d.position[0]; // position the x
+        })
+        .attr('cy', d => {
+          return d.position[1]; // position the y
+        })
+        //.attr('r', 2) // define the radius
+        .attr('r', d => {
+          console.log(d); // access to the data here!!!
+          // return radius(+d);
+          return 3;
+        })
+        .style('fill', d => {
+          return color(d.War);
+        })
+        .attr('class', 'site'); // give each circle a class name
+
+      // applies event listeners to our polygons for user interaction
+      battleSites.on('mouseover', (event, d) => { // when mousing over an element
+          console.log(event, d)
+          d3.select(event.currentTarget).classed('hover', true)
+            .raise(); // select it, add a class name, and bring to front
+          tooltip.classed('invisible', false).html(
+            `Site: <h6>${d.Site}</h6>
+            War: ${d.War}<br>
+            Belligerents: ${d.Belligerent1} vs. ${d.Belligerent2}<br>
+            Date(s): ${d.Dates}`) // make tooltip visible and update info
+        })
+        .on('mouseout', (event, d) => { // when mousing out of an element
+          d3.select(event.currentTarget).classed('hover', false) // remove the class from the polygon
+          tooltip.classed('invisible', true) // hide the element
+        });
+
+      filterByAttribute(battleSitesData, battleSites);
+
+      // drawLegend(svg, width, height, radius);
+
+      makeZoom(svg, radius);
+
+    } // end function drawMap(data)
+
+    //console.log(color('Power Plants')); // output is #e41a1c
+
+    function filterByAttribute(battleSitesData, battleSites) {
+      // array to hold select options
+      var uniqueTypes = [];
+
+      // loop through all features and push unique types to array
+      battleSitesData.forEach(function (battleSites) {
+        if (!uniqueTypes.includes(battleSites.War)) {
+          uniqueTypes.push(battleSites.War);
+        }
+      });
+
+      // sort strings alphabetically
+      uniqueTypes.sort();
+
+      // add an all facilities to the beginning
+      uniqueTypes.unshift('All Battle Sites');
+
+      // select all the options (that don't exist yet)
+      d3.select('#ui .dropdown-menu').selectAll('a')
+        .data(uniqueTypes) // use array as data
+        .join('a') // append a new option element for each data item
+        .text(d => {
+          return d // use the item as text
+        })
+        .attr('value', d => {
+          return d // use the time as value attribute
+        })
+        .attr('href', '#')
+        .classed('dropdown-item', true)
+        .on('click', onchange); // when the user clicks call onchange function
+
+      function onchange() {
+        // get the currently selected value
+        let val = d3.select(this).attr('value');
+
+        // change the display property for each circle
+        battleSites.style('display', d => {
+          if (val === 'All Battle Sites') return 'inline';
+          if (d.War != val) return 'none';
+        });
+
+        d3.select('#ui > a').html(val); // update the UI with current val
+      }
+    }
+
+    /*function drawLegend(svg, width, height, radius) {
+
+      const legend = svg.append('g')
+        .attr('dy', '1.3em')
+        .attr('class', 'legend')
+        .attr('transform', 'translate(' + (width - 40) + ',' + (height - 20) + ')')
+        .selectAll('g')
+        .data([5e6, 2e7])
+        .join('g');
+
+      legend.append('circle')
+        .attr('cy', d => {
+          return -radius(d);
+        })
+        .attr('r', radius);
+
+      legend.append('text')
+        .attr('y', d => {
+          return -2 * radius(d);
+        })
+        .attr('dy', '1.3em')
+        .text(d3.format('.1s'));
+
+      legend.append('text')
+        .attr('y', 16)
+        .text('metric tons');
+    } // end function drawLegend(svg, width, height, radius)*/
+  </script>
+</body>
+
+</html>
