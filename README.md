@@ -63,3 +63,6 @@ Battle sites in the USA and just across the border
         - Leaflet Version: JS, HTML, CSS will all be used as per previous lessons.  not sure yet if I will create separate js and css files from the html index or not yet.
         - D3 Version: Will be used.  Appropriate projection and colors will be experimented with.
         - Hosting platform will be GitHub and eventually incorporated into my portfolio at https://ukgrad95.github.io/
+
+        Static Version:
+        - ArcGIS will be used to create a static map and potentially enter it in the Esri Conference Map Gallery.
