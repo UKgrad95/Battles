@@ -58,29 +58,29 @@
         return L.circleMarker(ll, {
           opacity: 1,
           weight: 2,
-          fillOpacity: 0,
+          fillOpacity: 0.5,
         })
       }
     }
 
     // create separate layers from GeoJSON data
-    const americanrevolutionLayer = L.geoJson(data, options).addTo(map),
-      civilwarLayer = L.geoJson(data, options).addTo(map),
-      frenchindianLayer = L.geoJson(data, options).addTo(map),
-      kinggeorgeLayer = L.geoJson(data, options).addTo(map),
-      kingwilliamLayer = L.geoJson(data, options).addTo(map),
-      queenanneLayer = L.geoJson(data, options).addTo(map),
-      jenkinsLayer = L.geoJson(data, options).addTo(map),
-      indianwarsLayer = L.geoJson(data, options).addTo(map),
-      rebellionsLayer = L.geoJson(data, options).addTo(map),
-      mexicanwarLayer = L.geoJson(data, options).addTo(map),
-      war1812Layer = L.geoJson(data, options).addTo(map),
-      worldwarLayer = L.geoJson(data, options).addTo(map),
-      year = L.geoJson(data, options).addTo(map);
+    //const americanrevolutionLayer = L.geoJson(data, options).addTo(map),
+    //  civilwarLayer = L.geoJson(data, options).addTo(map),
+    //  frenchindianLayer = L.geoJson(data, options).addTo(map),
+    //  kinggeorgeLayer = L.geoJson(data, options).addTo(map),
+    //  kingwilliamLayer = L.geoJson(data, options).addTo(map),
+    //  queenanneLayer = L.geoJson(data, options).addTo(map),
+    //  jenkinsLayer = L.geoJson(data, options).addTo(map),
+    //  indianwarsLayer = L.geoJson(data, options).addTo(map),
+    //  rebellionsLayer = L.geoJson(data, options).addTo(map),
+    //  mexicanwarLayer = L.geoJson(data, options).addTo(map),
+    //  war1812Layer = L.geoJson(data, options).addTo(map),
+    //  worldwarLayer = L.geoJson(data, options).addTo(map),
+    //  year = L.geoJson(data, options).addTo(map);
 
 
     // war layer colors
-    americanrevolutionLayer.setStyle({
+    /*americanrevolutionLayer.setStyle({
       color: '#FF0000',
     });
     civilwarLayer.setStyle({
@@ -132,7 +132,27 @@
       "<b style='color:#000080'>War of 1812 (1812-1815)</b>": war1812Layer,
       "<b style='color:#800080'>World War II (1939-1945)</b>": worldwarLayer,
 
+    }*/
+    const eventLookup = {
+      americanrevolutionLayer: {
+        color: '#FF0000',
+        symbol: 'marker-15.1.svg',
+        filter: 'American Revolution (1775-1783)'
+      },
+      civilwarLayer: {
+        color: '#808080',
+        symbol: 'marker-15.2.svg',
+        filter: 'Civil War (1861-1865)'
+
+      },
+      war1812Layer: {
+        color: '#000080',
+        symbol: 'marker-15.3.svg',
+        filter: 'War of 1812 (1812-1815)'
+      }
     }
+
+
 
     L.control.layers(null, sourceLayers, {
       collapsed: false,
