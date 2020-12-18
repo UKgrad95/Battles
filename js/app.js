@@ -51,61 +51,7 @@
         }
       }
 
-      // create separate layers from GeoJSON data
-      //  const americanrevolutionLayer = L.geoJson(data, options).addTo(map),
-      //  civilwarLayer = L.geoJson(data, options).addTo(map),
-      //  frenchindianLayer = L.geoJson(data, options).addTo(map),
-      //  kinggeorgeLayer = L.geoJson(data, options).addTo(map),
-      //  kingwilliamLayer = L.geoJson(data, options).addTo(map),
-      //  queenanneLayer = L.geoJson(data, options).addTo(map),
-      //  jenkinsLayer = L.geoJson(data, options).addTo(map),
-      //  indianwarsLayer = L.geoJson(data, options).addTo(map),
-      //  rebellionsLayer = L.geoJson(data, options).addTo(map),
-      //  mexicanwarLayer = L.geoJson(data, options).addTo(map),
-      //  war1812Layer = L.geoJson(data, options).addTo(map),
-      //  worldwarLayer = L.geoJson(data, options).addTo(map),
-      //  year = L.geoJson(data, options).addTo(map);
-
-
-      // war layer colors
-      /*americanrevolutionLayer.setStyle({
-        color: '#FF0000',
-      });
-      civilwarLayer.setStyle({
-        color: '#808080',
-      });
-      frenchindianLayer.setStyle({
-        color: '#0000FF',
-      });
-      kinggeorgeLayer.setStyle({
-        color: '#0000FF',
-      });
-      kingwilliamLayer.setStyle({
-        color: '#0000FF',
-      });
-      queenanneLayer.setStyle({
-        color: '#0000FF',
-      });
-      jenkinsLayer.setStyle({
-        color: '#0000FF',
-      });
-      indianwarsLayer.setStyle({
-        color: '#cd5c5c',
-      });
-      rebellionsLayer.setStyle({
-        color: '#FFa500',
-      });
-      mexicanwarLayer.setStyle({
-        color: '#008000',
-      });
-      war1812Layer.setStyle({
-        color: '#000080',
-      });
-      worldwarLayer.setStyle({
-        color: '#800080',
-      });
-
-      const sourceLayers = {
+      /*const sourceLayers = {
 
         "<b style='color:#FF0000'>American Revolution (1775-1783)</b>": americanrevolutionLayer,
         "<b style='color:#808080'>Civil War (1861-1865)</b>": civilwarLayer,
@@ -184,75 +130,5 @@
       // map.setZoom(map.getZoom() - .4);
 
     } // end drawMap(data)
-
-    //function resizeCircles(americanrevolutionLayer,
-    //  civilwarLayer,
-    //  frenchindianLayer,
-    //  kinggeorgeLayer,
-    //  kingwilliamLayer,
-    //  queenanneLayer,
-    //  jenkinsLayer,
-    //  indianwarsLayer,
-    //  rebellionsLayer,
-    //  mexicanwarLayer,
-    //  war1812Layer,
-    //  worldwarLayer) {
-
-    //  americanrevolutionLayer.eachLayer(function (layer) {
-    //    const radius = calcRadius();
-    //    layer.setRadius(radius);
-    //  });
-    //  civilwarLayer.eachLayer(function (layer) {
-    //    const radius = calcRadius();
-    //    layer.setRadius(radius);
-    //  });
-    //  frenchindianLayer.eachLayer(function (layer) {
-    //    const radius = calcRadius();
-    //    layer.setRadius(radius);
-    //  });
-    //  kinggeorgeLayer.eachLayer(function (layer) {
-    //    const radius = calcRadius();
-    //    layer.setRadius(radius);
-    //  });
-    //  kingwilliamLayer.eachLayer(function (layer) {
-    //    const radius = calcRadius();
-    //    layer.setRadius(radius);
-    //  });
-    //  queenanneLayer.eachLayer(function (layer) {
-    //    const radius = calcRadius();
-    //    layer.setRadius(radius);
-    //  });
-    //  jenkinsLayer.eachLayer(function (layer) {
-    //    const radius = calcRadius();
-    //    layer.setRadius(radius);
-    //  });
-    //  indianwarsLayer.eachLayer(function (layer) {
-    //    const radius = calcRadius();
-    //    layer.setRadius(radius);
-    //  });
-    //  rebellionsLayer.eachLayer(function (layer) {
-    //    const radius = calcRadius();
-    //    layer.setRadius(radius);
-    //  });
-    //  mexicanwarLayer.eachLayer(function (layer) {
-    //    const radius = calcRadius();
-    //    layer.setRadius(radius);
-    //  });
-    //  war1812Layer.eachLayer(function (layer) {
-    //    const radius = calcRadius();
-    //    layer.setRadius(radius);
-    //  });
-    //  worldwarLayer.eachLayer(function (layer) {
-    //    const radius = calcRadius();
-    //    layer.setRadius(radius);
-    //  });
-    //}; // end resizeCircles()
-
-    // retrieveInfo(sourceLayers, currentYear);
-    // updateYear(currentYear);
   
-
-  //function calcRadius() {
-  //  return 5
-  //}
 })
