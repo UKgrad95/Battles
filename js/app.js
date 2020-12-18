@@ -52,21 +52,20 @@
       }
 
       /*const sourceLayers = {
-
         "<b style='color:#FF0000'>American Revolution (1775-1783)</b>": americanrevolutionLayer,
         "<b style='color:#808080'>Civil War (1861-1865)</b>": civilwarLayer,
-        "<b style='color:#0000FF'>French & Indian War (1754-1763)</b>": frenchindianLayer,
         "<b style='color:#0000FF'>French & Indian War - King George's War (1744-1748)</b>": kinggeorgeLayer,
         "<b style='color:#0000FF'>French & Indian War - King William's War (1688-1697)</b>": kingwilliamLayer,
         "<b style='color:#0000FF'>French & Indian War - Queen Anne's War (1702-1713)</b>": queenanneLayer,
+        "<b style='color:#0000FF'>French & Indian War - Seven Year's War (1754-1763)</b>": sevenyearLayer,
         "<b style='color:#0000FF'>French & Indian War - War of Jenkins' Ear (1744-1748)</b>": jenkinsLayer,
         "<b style='color:#cd5c5c'>Indian Wars (1609-1924)</b>": indianwarsLayer,
         "<b style='color:#FFa500'>Insurrections & Rebellions</b>": rebellionsLayer,
         "<b style='color:#008000'>Mexican War (1846-1848)</b>": mexicanwarLayer,
         "<b style='color:#000080'>War of 1812 (1812-1815)</b>": war1812Layer,
         "<b style='color:#800080'>World War II (1939-1945)</b>": worldwarLayer,
-
       }*/
+
       const eventLookup = {
         americanrevolutionLayer: {
           color: '#FF0000',
@@ -77,13 +76,57 @@
           color: '#808080',
           symbol: 'marker-15.2.svg',
           filter: 'Civil War (1861-1865)'
-
+        },
+        kinggeorgeLayer: {
+          color: '#0000FF',
+          symbol: 'marker-15.2.svg',
+          filter: 'French & Indian War - King Georges War (1744-1748)'
+        },
+        kingwilliamLayer: {
+          color: '#0000FF',
+          symbol: 'marker-15.2.svg',
+          filter: 'French & Indian War - King Williams War (1688-1697)'
+        },
+        queenanneLayer: {
+          color: '#0000FF',
+          symbol: 'marker-15.2.svg',
+          filter: 'French & Indian War - Queen Annes War (1702-1713)'
+        },
+        sevenyearLayer: {
+          color: '#0000FF',
+          symbol: 'marker-15.2.svg',
+          filter: 'French & Indian War - Seven Years War (1754-1763)'
+        },
+        jenkinsLayer: {
+          color: '#0000FF',
+          symbol: 'marker-15.2.svg',
+          filter: 'French & Indian War - War of Jenkins Ear (1744-1748)'
+        },
+        indianwarsLayer: {
+          color: '#cd5c5c',
+          symbol: 'marker-15.2.svg',
+          filter: 'Indian Wars (1609-1924)'
+        },
+        rebellionsLayer: {
+          color: '#FFa500',
+          symbol: 'marker-15.2.svg',
+          filter: 'Insurrections & Rebellions'
+        },
+        mexicanwarLayer: {
+          color: '#008000',
+          symbol: 'marker-15.2.svg',
+          filter: 'Mexican War (1846-1848)'
         },
         war1812Layer: {
           color: '#000080',
           symbol: 'marker-15.3.svg',
           filter: 'War of 1812 (1812-1815)'
-        }
+        },
+        worldwarLayer: {
+          color: '#800080',
+          symbol: 'marker-15.3.svg',
+          filter: 'World War II (1939-1945)'
+        },
       }
 
       let wars = {}
