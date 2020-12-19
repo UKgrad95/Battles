@@ -381,7 +381,7 @@
           //d.position = projection([d.Longitude, d.Latitude]); // create a new data attribute
           //return d.position[0]; // position the x
           d.position = projection([+d.Long, +d.Lat]); // create a new data attribute
-          console.log(d)
+          // console.log(d)
           return d.position[0]; // position the x
         })
         .attr('cy', d => {
@@ -389,18 +389,18 @@
         })
         //.attr('r', 2) // define the radius
         .attr('r', d => {
-          console.log(d); // access to the data here!!!
+          // console.log(d); // access to the data here!!!
           // return radius(+d);
           return 3;
         })
         .style('fill', d => {
-          return color(d.War);
+          return colorPicker(d.War);
         })
         .attr('class', 'site'); // give each circle a class name
 
       // applies event listeners to our polygons for user interaction
       battleSites.on('mouseover', (event, d) => { // when mousing over an element
-          console.log(event, d)
+          // console.log(event, d)
           d3.select(event.currentTarget).classed('hover', true)
             .raise(); // select it, add a class name, and bring to front
           tooltip.classed('invisible', false).html(
@@ -423,6 +423,17 @@
     } // end function drawMap(data)
 
     //console.log(color('Power Plants')); // output is #e41a1c
+
+    function colorPicker(war) {
+      console.log(war)
+      if (war.includes('American Revolution')) {
+        return 'blue'
+      } else if (war.includes('Civil War')) {
+        return 'red'
+      } else if (war.includes('War of 1812')) {
+        return 'purple'
+      }
+    }
 
     function filterByAttribute(battleSitesData, battleSites) {
       // array to hold select options
