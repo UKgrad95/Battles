@@ -245,7 +245,7 @@
   <script src="https://d3js.org/d3-interpolate.v2.min.js"></script>
   <script src="https://d3js.org/d3-scale-chromatic.v2.min.js"></script>
   <script src="https://d3js.org/d3-time.v2.min.js"></script>
-  
+
 
   <script>
     // JavaScript
@@ -469,7 +469,15 @@
       }
     }
 
-    
+    selectYear = slider({
+      min: 1609,
+      max: 1924,
+      step: 1,
+      value: 1609,
+      description: "Year"
+    })
+
+
 
     /*function drawLegend(svg, width, height, radius) {
 
