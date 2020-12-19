@@ -159,7 +159,7 @@
         legendWars[buildStyle] = wars[w]
       }
 
-      //console.log(legendWars)
+      console.log(legendWars)
       //L.control.layers(null, legendWars, {
       const legendBuilt = L.control.layers(null, legendWars, {
         collapsed: false,
