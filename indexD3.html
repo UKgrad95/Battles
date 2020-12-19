@@ -37,6 +37,12 @@
       top: 1em;
     }
 
+    #slider {
+      position: absolute;
+      left: 1em;
+      top: 1em;
+    }
+
     /* Small devices (landscape phones, 576px and up) */
     @media (min-width: 576px) {}
 
@@ -85,6 +91,12 @@
     <section class="row bg-secondary ">
       <div class="col-12 col-md-7 col-lg-8 px-0">
         <div id="map" class="bg-secondary position-relative">
+          <div id="slider" >
+            <label>Conflicts before: <span>2020</span>
+              <input type="range" min=1400 max=2020 value=2020 
+               step=10 id="year-slider" ></input>
+            </label>  
+          </div>
           <div id="ui" class="dropdown">
             <a class="btn btn-secondary text-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -125,6 +137,7 @@
         </section>
       </aside>
     </section>
+    
     <!--<footer class="row bg-secondary text-black py-4">
       <div class="col mx-2">
         <ul class="list-unstyled">
@@ -252,6 +265,7 @@
     // asynchronous calls to data files
     const statesJson = d3.json('data/us-states.json');
     const battleSitesCSV = d3.csv('data/BattleSites.csv');
+    const year = 2020
 
     // use promise to call all data files, then send data to callback
     Promise.all([statesJson, battleSitesCSV])
@@ -304,6 +318,9 @@
 
     // function called when Promise above is complete
     function drawMap(data) {
+
+       // remove existing SVG
+       d3.selectAll("svg").remove();
 
       console.log(data); // our two datasets within an array
 
@@ -372,10 +389,16 @@
       // const color = d3.scaleOrdinal(d3.schemeCategory10);
       const color = d3.scaleOrdinal(d3.schemePaired);
 
+      let battleSitesYear = []
+      battleSitesData.forEach(function(site){
+        if (site.Year <= year) {
+          battleSitesYear.push(site)
+        }
+      })
 
       const battleSites = svg.append('g') // append new g element
         .selectAll('circle') // select all the circles
-        .data(battleSitesData) // use the facility CSV data
+        .data(battleSitesYear) // use the facility CSV data
         .join('circle') // join that data to circle elements
         .attr('cx', d => { // feed the long/lat to the projection generator
           //d.position = projection([d.Longitude, d.Latitude]); // create a new data attribute
@@ -413,12 +436,14 @@
           d3.select(event.currentTarget).classed('hover', false) // remove the class from the polygon
           tooltip.classed('invisible', true) // hide the element
         });
+      
 
       filterByAttribute(battleSitesData, battleSites);
 
       // drawLegend(svg, width, height, radius);
 
       makeZoom(svg, radius);
+      yearSlider(battleSites)
 
     } // end function drawMap(data)
 
@@ -479,6 +504,24 @@
         d3.select('#ui > a').html(val); // update the UI with current val
       }
     }
+
+    function yearSlider(battleSites){
+
+      let slider = document.querySelector('#year-slider')
+      slider.addEventListener('input', function() {
+        console.log(slider.value)
+        battleSites.style('display', d => {
+          if (d.Year > slider.value) {
+            return 'none'
+          } else {
+            return 'inline'
+          }
+        });
+        d3.select('#slider span').html(slider.value); // update the UI with current val
+      })
+
+        
+      }
 
     selectYear = slider({
       min: 1609,
