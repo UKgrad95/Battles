@@ -150,7 +150,10 @@
           },
           onEachFeature: function (feature, layer) {
             const p = feature.properties
-            const popup = `${p.Site}`
+            const popup = `${p.Site}
+                            ${p.War}
+                            ${p.Belligerents1} vs. ${p.Belligerents2}
+                            ${p.Dates}`
             layer.bindPopup(popup)
 
           }
@@ -160,7 +163,7 @@
       }
 
       console.log(legendWars)
-      //L.control.layers(null, legendWars, {
+      
       const legendBuilt = L.control.layers(null, legendWars, {
         collapsed: false,
         color: '#FF0000'
