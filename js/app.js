@@ -24,8 +24,10 @@
       maxZoom: 18
     }).addTo(map);
 
+    console.log('Hey')
+
     // use omnivore to load the CSV data
-    omnivore.csv('data/battlesites.csv')
+    omnivore.csv('/data/BattleSites.csv')
       .on('ready', function (e) {
         console.log(e.target)
         drawMap(e.target.toGeoJSON());
@@ -177,4 +179,4 @@
 
     } // end drawMap(data)
   
-})
+})() // missing pair of () to invoke function
