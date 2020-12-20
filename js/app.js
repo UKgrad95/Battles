@@ -68,62 +68,62 @@
 
       const eventLookup = {
         americanrevolutionLayer: {
-          color: '#FF0000',
+          color: '#FF0000', // red
           symbol: 'marker-15.1.svg',
           filter: 'American Revolution (1775-1783)'
         },
         civilwarLayer: {
-          color: '#808080',
+          color: '#808080', // gray
           symbol: 'marker-15.2.svg',
           filter: 'Civil War (1861-1865)'
         },
         kinggeorgeLayer: {
-          color: '#0000FF',
+          color: '#ffef00', // canary yellow
           symbol: 'marker-15.2.svg',
           filter: 'French & Indian War - King Georges War (1744-1748)'
         },
         kingwilliamLayer: {
-          color: '#0000FF',
+          color: '#7fff00', // chartreuse
           symbol: 'marker-15.2.svg',
           filter: 'French & Indian War - King Williams War (1688-1697)'
         },
         queenanneLayer: {
-          color: '#0000FF',
+          color: '#ff007f', // bright pink
           symbol: 'marker-15.2.svg',
           filter: 'French & Indian War - Queen Annes War (1702-1713)'
         },
         sevenyearLayer: {
-          color: '#0000FF',
+          color: '#318ce7', // bleu de france
           symbol: 'marker-15.2.svg',
           filter: 'French & Indian War - Seven Years War (1754-1763)'
         },
         jenkinsLayer: {
-          color: '#0000FF',
+          color: '#3fff00', // harlequin
           symbol: 'marker-15.2.svg',
           filter: 'French & Indian War - War of Jenkins Ear (1744-1748)'
         },
         indianwarsLayer: {
-          color: '#cd5c5c',
+          color: '#cd5c5c', // indian red
           symbol: 'marker-15.2.svg',
           filter: 'Indian Wars (1609-1924)'
         },
         rebellionsLayer: {
-          color: '#FFa500',
+          color: '#FFa500', // orange
           symbol: 'marker-15.2.svg',
           filter: 'Insurrections & Rebellions'
         },
         mexicanwarLayer: {
-          color: '#008000',
+          color: '#008000', // green
           symbol: 'marker-15.2.svg',
           filter: 'Mexican War (1846-1848)'
         },
         war1812Layer: {
-          color: '#000080',
+          color: '#0000FF', // blue
           symbol: 'marker-15.3.svg',
           filter: 'War of 1812 (1812-1815)'
         },
         worldwarLayer: {
-          color: '#800080',
+          color: '#800080', // purple
           symbol: 'marker-15.3.svg',
           filter: 'World War II (1939-1945)'
         },
@@ -177,4 +177,4 @@
 
     } // end drawMap(data)
   
-})
+  })() // the missing pair of () to invoke function 
