@@ -37,6 +37,12 @@
       top: 1em;
     }
 
+    #slider {
+      position: absolute;
+      left: 1em;
+      top: 1em;
+    }
+
     /* Small devices (landscape phones, 576px and up) */
     @media (min-width: 576px) {}
 
@@ -85,6 +91,11 @@
     <section class="row bg-secondary ">
       <div class="col-12 col-md-7 col-lg-8 px-0">
         <div id="map" class="bg-secondary position-relative">
+          <div id="slider">
+            <label>Conflicts before: <span>2020</span>
+              <input type="range" min=1600 max=2020 value=2020 step=10 id="year-slider"></input>
+            </label>
+          </div>
           <div id="ui" class="dropdown">
             <a class="btn btn-secondary text-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -245,13 +256,14 @@
   <script src="https://d3js.org/d3-interpolate.v2.min.js"></script>
   <script src="https://d3js.org/d3-scale-chromatic.v2.min.js"></script>
   <script src="https://d3js.org/d3-time.v2.min.js"></script>
-  
+
 
   <script>
     // JavaScript
     // asynchronous calls to data files
     const statesJson = d3.json('data/us-states.json');
-    const battleSitesCSV = d3.csv('data/BattleSites.csv');
+    const battleSitesCSV = d3.csv('data/battlesites.csv');
+    const year = 2020
 
     // use promise to call all data files, then send data to callback
     Promise.all([statesJson, battleSitesCSV])
@@ -306,6 +318,9 @@
     function drawMap(data) {
 
       console.log(data); // our two datasets within an array
+
+      // remove existing SVG
+      d3.selectAll("svg").remove();
 
       // data is array of our two datasets
       const statesData = data[0];
@@ -372,10 +387,17 @@
       // const color = d3.scaleOrdinal(d3.schemeCategory10);
       const color = d3.scaleOrdinal(d3.schemePaired);
 
+      let battleSitesYear = []
+      battleSitesData.forEach(function (site) {
+        if (site.Year <= year) {
+          battleSitesYear.push(site)
+        }
+      })
 
       const battleSites = svg.append('g') // append new g element
         .selectAll('circle') // select all the circles
-        .data(battleSitesData) // use the facility CSV data
+        // .data(battleSitesData) // use the facility CSV data
+        .data(battleSitesYear) // use the facility CSV data
         .join('circle') // join that data to circle elements
         .attr('cx', d => { // feed the long/lat to the projection generator
           //d.position = projection([d.Longitude, d.Latitude]); // create a new data attribute
@@ -389,18 +411,19 @@
         })
         //.attr('r', 2) // define the radius
         .attr('r', d => {
-          console.log(d); // access to the data here!!!
+          // console.log(d); // access to the data here!!!
           // return radius(+d);
           return 3;
         })
         .style('fill', d => {
-          return color(d.War);
+          // return color(d.War);
+          return colorPicker(d.War);
         })
         .attr('class', 'site'); // give each circle a class name
 
       // applies event listeners to our polygons for user interaction
       battleSites.on('mouseover', (event, d) => { // when mousing over an element
-          console.log(event, d)
+          // console.log(event, d)
           d3.select(event.currentTarget).classed('hover', true)
             .raise(); // select it, add a class name, and bring to front
           tooltip.classed('invisible', false).html(
@@ -419,10 +442,39 @@
       // drawLegend(svg, width, height, radius);
 
       makeZoom(svg, radius);
-
+      yearSlider(battleSites);
     } // end function drawMap(data)
 
-    //console.log(color('Power Plants')); // output is #e41a1c
+    // console.log(color('Power Plants')); // output is #e41a1c
+
+    function colorPicker(war) {
+      console.log(war)
+      if (war.includes('American Revolution (1775-1783)')) {
+        return '#FF0000' // red
+      } else if (war.includes('Civil War (1861-1865)')) {
+        return '#808080' // gray
+      } else if (war.includes('French & Indian War - King George')) {
+        return '#ffef00' // canary yellow
+      } else if (war.includes('French & Indian War - King William')) {
+        return '#7fff00' // chartreuse
+      } else if (war.includes('French & Indian War - Queen Anne')) {
+        return '#ff007f' // bright pink
+      } else if (war.includes('French & Indian War - Seven Year')) {
+        return '#318ce7' // bleu de france
+      } else if (war.includes('French & Indian War - War of Jenkins')) {
+        return '#3fff00' // harlequin
+      } else if (war.includes('Indian Wars (1609-1924)')) {
+        return '#cd5c5c' // indian red
+      } else if (war.includes('Insurrections & Rebellions')) {
+        return '#FFa500' // orange
+      } else if (war.includes('Mexican War (1846-1848)')) {
+        return '#008000' // green
+      } else if (war.includes('War of 1812 (1812-1815)')) {
+        return '#0000FF' // blue
+      } else if (war.includes('World War II (1939-1945)')) {
+        return '#800080' // purple
+      }
+    }
 
     function filterByAttribute(battleSitesData, battleSites) {
       // array to hold select options
@@ -469,6 +521,25 @@
       }
     }
 
+    function yearSlider(battleSites) {
+
+      let slider = document.querySelector('#year-slider')
+      slider.addEventListener('input', function () {
+        console.log(slider.value)
+        battleSites.style('display', d => {
+          if (d.Year > slider.value) {
+            return 'none'
+          } else {
+            return 'inline'
+          }
+        });
+        d3.select('#slider span').html(slider.value); // update the UI with current val
+      })
+
+
+    }
+
+
     selectYear = slider({
       min: 1609,
       max: 1924,
@@ -476,6 +547,8 @@
       value: 1609,
       description: "Year"
     })
+
+
 
     /*function drawLegend(svg, width, height, radius) {
 
