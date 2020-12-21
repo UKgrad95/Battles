@@ -262,7 +262,7 @@
     // JavaScript
     // asynchronous calls to data files
     const statesJson = d3.json('data/us-states.json');
-    const battleSitesCSV = d3.csv('data/BattleSites.csv');
+    const battleSitesCSV = d3.csv('data/battlesites.csv');
     const year = 2020
 
     // use promise to call all data files, then send data to callback
@@ -535,8 +535,6 @@
         });
         d3.select('#slider span').html(slider.value); // update the UI with current val
       })
-
-
     }
 
 
