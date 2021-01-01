@@ -8,10 +8,17 @@
 
 h1 {
   color: orange;
+  font-weight: bold;
 }
 
 h2 {
   color: red;
+  font-weight: bold;
+}
+
+h3 {
+  color: black;
+  font-weight: bold;
 }
 
 .legend-large, .legend-small {

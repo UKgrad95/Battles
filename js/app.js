@@ -34,22 +34,22 @@
       .on('error', function (e) {
         console.log(e.error[0].message);
         
-      }).addTo(map); // add the point data to the map
+      })//.addTo(map); // add the point data to the map
 
 
     function drawMap(data) {
       // access to data here
-      console.log(data);
+      // console.log(data);
 
-      const options = {
-        pointToLayer: function (feature, ll) {
-          return L.circleMarker(ll, {
-            opacity: 1,
-            weight: 2,
-            fillOpacity: 0.5,
-          })
-        }
-      }
+      // const options = {
+      //  pointToLayer: function (feature, ll) {
+      //    return L.circleMarker(ll, {
+      //      opacity: 1,
+      //      weight: 2,
+      //      fillOpacity: 0.5,
+      //    })
+      //  }
+      //}
 
       /*const sourceLayers = {
         "<b style='color:#FF0000'>American Revolution (1775-1783)</b>": americanrevolutionLayer,
@@ -69,62 +69,62 @@
       const eventLookup = {
         americanrevolutionLayer: {
           color: '#FF0000', // red
-          symbol: 'marker-15.1.svg',
+          symbol: 'cross-muskets2.png',
           filter: 'American Revolution (1775-1783)'
         },
         civilwarLayer: {
           color: '#808080', // gray
-          symbol: 'marker-15.2.svg',
+          symbol: 'field-artillery3.png',
           filter: 'Civil War (1861-1865)'
         },
         kinggeorgeLayer: {
           color: '#ffef00', // canary yellow
-          symbol: 'marker-15.2.svg',
-          filter: 'French & Indian War - King Georges War (1744-1748)'
+          symbol: 'king-george-ii-mono.png',
+          filter: "French & Indian War - King George's War (1744-1748)"
         },
         kingwilliamLayer: {
           color: '#7fff00', // chartreuse
-          symbol: 'marker-15.2.svg',
-          filter: 'French & Indian War - King Williams War (1688-1697)'
+          symbol: 'king-william-iii.jpg',
+          filter: "French & Indian War - King William's War (1688-1697)"
         },
         queenanneLayer: {
           color: '#ff007f', // bright pink
-          symbol: 'marker-15.2.svg',
-          filter: 'French & Indian War - Queen Annes War (1702-1713)'
+          symbol: 'QueenAnne1702.jpg',
+          filter: "French & Indian War - Queen Anne's War (1702-1713)"
         },
         sevenyearLayer: {
           color: '#318ce7', // bleu de france
-          symbol: 'marker-15.2.svg',
-          filter: 'French & Indian War - Seven Years War (1754-1763)'
+          symbol: 'cross-arrows3.png',
+          filter: "French & Indian War - Seven Year's War (1754-1763)"
         },
         jenkinsLayer: {
           color: '#3fff00', // harlequin
           symbol: 'marker-15.2.svg',
-          filter: 'French & Indian War - War of Jenkins Ear (1744-1748)'
+          filter: "French & Indian War - War of Jenkins' Ear (1744-1748)"
         },
         indianwarsLayer: {
           color: '#cd5c5c', // indian red
-          symbol: 'marker-15.2.svg',
+          symbol: 'indian-arrowhead2.png',
           filter: 'Indian Wars (1609-1924)'
         },
         rebellionsLayer: {
           color: '#FFa500', // orange
-          symbol: 'marker-15.2.svg',
+          symbol: 'fire.png',
           filter: 'Insurrections & Rebellions'
         },
         mexicanwarLayer: {
           color: '#008000', // green
-          symbol: 'marker-15.2.svg',
+          symbol: 'cross-saber2.png',
           filter: 'Mexican War (1846-1848)'
         },
         war1812Layer: {
           color: '#0000FF', // blue
-          symbol: 'marker-15.3.svg',
+          symbol: 'ship.png',
           filter: 'War of 1812 (1812-1815)'
         },
         worldwarLayer: {
           color: '#800080', // purple
-          symbol: 'marker-15.3.svg',
+          symbol: 'grenade.png',
           filter: 'World War II (1939-1945)'
         },
       }
@@ -150,10 +150,10 @@
           },
           onEachFeature: function (feature, layer) {
             const p = feature.properties
-            const popup = `${p.Site}
-                            ${p.War}
-                            ${p.Belligerents1} vs. ${p.Belligerents2}
-                            ${p.Dates}`
+            const popup = `<h3>${p.Site}</h3>
+            ${p.War}<br>
+            ${p.Belligerent1} vs. ${p.Belligerent2}<br>
+            ${p.Dates}`
             layer.bindPopup(popup)
 
           }
