@@ -85,7 +85,7 @@
         kingwilliamLayer: {
           color: '#7fff00', // chartreuse
           symbol: 'king-william-iii.jpg',
-          filter: `"French & Indian War - King William's War (1688-1697)"`
+          filter: "French & Indian War - King William\'s War (1688-1697)"
         },
         queenanneLayer: {
           color: '#ff007f', // bright pink
