@@ -85,22 +85,22 @@
         kingwilliamLayer: {
           color: '#7fff00', // chartreuse
           symbol: 'king-william-iii.jpg',
-          filter: "French & Indian War - King William\'s War (1688-1697)"
+          filter: "French & Indian War - King William's War (1688–1697)"
         },
         queenanneLayer: {
           color: '#ff007f', // bright pink
           symbol: 'QueenAnne1702.jpg',
-          filter: `"French & Indian War - Queen Anne's War (1702-1713)"`
+          filter: "French & Indian War - Queen Anne's War (1702-1713)"
         },
         sevenyearLayer: {
           color: '#318ce7', // bleu de france
           symbol: 'cross-arrows3.png',
-          filter: `"French & Indian War - Seven Year's War (1754-1763)"`
+          filter: "French & Indian War - Seven Year's War (1754-1763)"
         },
         jenkinsLayer: {
           color: '#3fff00', // harlequin
           symbol: 'marker-15.2.svg',
-          filter: `"French & Indian War - War of Jenkins' Ear (1744-1748)"`
+          filter: "French & Indian War - War of Jenkins' Ear (1744-1748)"
         },
         indianwarsLayer: {
           color: '#cd5c5c', // indian red
